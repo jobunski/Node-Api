@@ -8,5 +8,7 @@ module.exports = {
     define : {
       underscored : true
     }
-  }
+  },
+  jwtSecret: "Jtask-API",
+  jwtSession:{session: false}
 }
