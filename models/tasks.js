@@ -1,19 +1,20 @@
-module.exports = (sequelize, dataType) =>{
+module.exports = (sequelize, DataTypes) =>{
   const Tasks = sequelize.define("Tasks",{
-    id:{
-      type: dataType.INTEGER,
+    id: {
+      type: DataTypes.INTEGER,
       primaryKey : true,
       autoincrement : true
     },
-    title : {
-      type: dataType.STRING,
+    title: {
+      type: DataTypes.STRING,
       allowNull : false,
       validate : {
-        notEmpty : true
+        notEmpty : true,
+        notNull: {msg:"Title is required"}
       }
     },
-    done : {
-      type: dataType.BOOLEAN,
+    done: {
+      type: DataTypes.BOOLEAN,
       allowNull : false,
       defaultValue : false
     }

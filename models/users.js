@@ -1,28 +1,28 @@
-import bycrpt from "bcrypt";
+import bcrypt from "bcrypt";
 
-module.exports = (sequelize,dataType) => {
+module.exports = (sequelize,DataTypes) => {
     const Users = sequelize.define("Users", {
       id: {
-        type: dataType.INTEGER,
+        type: DataTypes.INTEGER,
         primaryKey : true,
-        autoincrement : true
+        autoIncrement : true
       },
       name : {
-        type: dataType.STRING,
+        type: DataTypes.STRING,
         allowNull : false,
         validate : {
           notEmpty: true
         }
       },
       password : {
-        type: dataType.STRING,
+        type: DataTypes.STRING,
         allowNull : false,
         validate : {
           notEmpty: true
         }
       },
       email: {
-        type: dataType.STRING,
+        type: DataTypes.STRING,
         unique: true,
         allowNull : false,
         validate : {
@@ -30,20 +30,20 @@ module.exports = (sequelize,dataType) => {
         }
       }
     },{
-      hook: {
+      hooks: {
         beforeCreate : user => {
-          const salt = bycrpt.genSaltSync();
-          user.password = bycrpt.hashSync(user.password,salt);
+          const salt = bcrypt.genSaltSync();
+          user.password = bcrypt.hashSync(user.password, salt);
         }
       },
-      classMethods: {
-        associate: (models) => {
+        classMethods: {
+        associate: models => {
           Users.hasMany(models.Tasks);
         },
         isPassword : (encodedPassword,password) =>{
-          return bycrpt.compareSync(password,encodedPassword);
+          return bcrypt.compareSync(password,encodedPassword);
         }
       }
     });
     return Users;
-}
+};

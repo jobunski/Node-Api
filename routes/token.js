@@ -1,17 +1,35 @@
 import jwt from "jwt-simple"
 
 module.exports = app => {
-  const cfg = app.lib.config;
+  const cfg = app.libs.config;
   const Users = app.db.models.Users;
+  /*
+  *@api {post} /token Authentication Token
+  *@apiGroup Credentials
+  *@apiParam {string} Email User email
+  *@apiParam {String} password User password
+  *@apiParamExample {json} Input
+  * {
+  *   "email": "john@corner.net",
+  *   "password": "12345"
+  *   }
+  *@apiSuccess {String} token Token of authenticted user
+  *apiSuccessExample {json} Success
+  *   HTTP/1.1 200 OK
+  *   {"token": "xyz.abc.123.hgf"}
+  *@apiErrorExample {json} Authentication Error
+  *   HTTP/1.1 401 Unauthorized
+  **/
   app.post("/token",(req,res) => {
     if (req.body.email && req.body.password) {
       const email = req.body.email;
-      const password = req.bosy.password;
+      const password = req.body.password;
       Users.findOne({where: {email: email}})
       .then(user => {
         if (Users.isPassword(user.password,password)) {
           const payload = {id: user.id};
-          res.json({token: jwt.encode(payload, cfg.jwtSecret)
+          res.json({
+            token: jwt.encode(payload, cfg.jwtSecret)
           });
         } else {
           res.sendStatus(401);

@@ -1,14 +1,7 @@
-module.exports = {
-  database : "Jtask",
-  username : "",
-  password : "",
-  params : {
-    dialect : "sqlite",
-    storage : "jtask.sqlite",
-    define : {
-      underscored : true
-    }
-  },
-  jwtSecret: "Jtask-API",
-  jwtSession:{session: false}
+module.exports = app => {
+  const env = process.env.NODE_ENV;
+  if (env) {
+    return require(`./config.${env}.js`);
+  }
+  return require("./config.development.js");
 }

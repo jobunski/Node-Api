@@ -1,0 +1,5 @@
+{"message":"[Sun Apr 14 2019 12:28:05 GMT+0300 (EAT)] Executing (default): CREATE TABLE IF NOT EXISTS `users` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `name` VARCHAR(255) NOT NULL, `password` VARCHAR(255) NOT NULL, `email` VARCHAR(255) NOT NULL UNIQUE, `created_at` DATETIME NOT NULL, `updated_at` DATETIME NOT NULL);","level":"info"}
+{"message":"[Sun Apr 14 2019 12:28:05 GMT+0300 (EAT)] Executing (default): PRAGMA INDEX_LIST(`users`)","level":"info"}
+{"message":"[Sun Apr 14 2019 12:28:05 GMT+0300 (EAT)] Executing (default): PRAGMA INDEX_INFO(`sqlite_autoindex_Users_1`)","level":"info"}
+{"message":"[Sun Apr 14 2019 12:28:05 GMT+0300 (EAT)] Executing (default): CREATE TABLE IF NOT EXISTS `tasks` (`id` INTEGER PRIMARY KEY, `title` VARCHAR(255) NOT NULL, `done` TINYINT(1) NOT NULL DEFAULT 0, `created_at` DATETIME NOT NULL, `updated_at` DATETIME NOT NULL, `user_id` INTEGER REFERENCES `users` (`id`) ON DELETE SET NULL ON UPDATE CASCADE);","level":"info"}
+{"message":"[Sun Apr 14 2019 12:28:05 GMT+0300 (EAT)] Executing (default): PRAGMA INDEX_LIST(`tasks`)","level":"info"}
